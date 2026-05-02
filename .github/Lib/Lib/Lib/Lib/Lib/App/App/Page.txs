@@ -1,0 +1,42 @@
+export default function HomePage() {
+  return (
+    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-blue-50 to-white p-8">
+      <div className="text-center max-w-2xl mx-auto">
+        <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+          MEMAR <span className="text-blue-600">PRO</span>
+        </h1>
+        <p className="text-xl text-gray-600 mb-8">
+          پلتفرم هوشمند طراحی و مدیریت پروژه‌های ساختمانی
+          <br />
+          با پشتیبانی از ۲۱ بیلدر تخصصی و هوش مصنوعی
+        </p>
+        <div className="flex flex-wrap gap-4 justify-center">
+          <a
+            href="/login"
+            className="px-8 py-3 bg-blue-600 text-white rounded-lg text-lg font-medium hover:bg-blue-700 transition-colors"
+          >
+            ورود به پلتفرم
+          </a>
+          <a
+            href="/dashboard"
+            className="px-8 py-3 border-2 border-blue-600 text-blue-600 rounded-lg text-lg font-medium hover:bg-blue-50 transition-colors"
+          >
+            داشبورد
+          </a>
+        </div>
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 text-right">
+          {[
+            { title: "۲۱ بیلدر تخصصی", desc: "از معماری تا برق و تأسیسات" },
+            { title: "منشی هوشمند", desc: "مدیریت تماس‌ها و قرارها با AI" },
+            { title: "مدیرعامل هوشمند", desc: "تحلیل داده و تصمیم‌سازی خودکار" },
+          ].map((item) => (
+            <div key={item.title} className="p-6 bg-white rounded-xl shadow-sm border">
+              <h3 className="font-bold text-lg text-gray-900 mb-2">{item.title}</h3>
+              <p className="text-gray-600">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </main>
+  );
+}
