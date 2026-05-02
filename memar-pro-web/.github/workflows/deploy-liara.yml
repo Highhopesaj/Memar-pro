@@ -1,0 +1,44 @@
+name: Deploy memar-pro-web to Liara
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  LIARA_APP: memar-pro-web
+  LIARA_PLATFORM: node
+  LIARA_REGION: iran
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Login to Liara Registry
+        run: |
+          echo "${{ secrets.LIARA_TOKEN }}" | docker login \
+            --username token \
+            --password-stdin \
+            registry.liara.ir
+
+      - name: Build Docker image
+        run: |
+          IMAGE_NAME="registry.liara.ir/${{ env.LIARA_APP }}:latest"
+          docker build -t "$IMAGE_NAME" .
+
+      - name: Push Docker image
+        run: |
+          IMAGE_NAME="registry.liara.ir/${{ env.LIARA_APP }}:latest"
+          docker push "$IMAGE_NAME"
+
+      - name: Deploy on Liara
+        run: |
+          npm install -g @liara/cli
+          liara deploy \
+            --app ${{ env.LIARA_APP }} \
+            --image registry.liara.ir/${{ env.LIARA_APP }}:latest \
+            --detach
